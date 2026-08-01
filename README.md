@@ -29,19 +29,34 @@ Install --> dir[/Installation dir/] -->|files| techs
 ```mermaid
 graph TD
 techs((Technologies<br>detected))
---> web{Web app?}
+--> api{API<br>docs?}
+-->|yes| ktor(((1. Ktor)))
+--> mobile([a. mobile])
+
+ktor --> server([b. server])
+
+ktor --> desktop([c. desktop])
+
+api -->|no| clear{Clear<br>communication?}
+-->|yes| ktor
+
+clear -->|no| web{Web app?}
 -->|yes| ssr{SSR?}
--->|yes| ktor(((Ktor +<br>Ksoup)))
---> mobile([Mobile])
+-->|yes| ksoup(((2. Ktor<br>+ Ksoup)))
+--> mobile
 
-ktor --> server([Server])
+ksoup --> server
 
-ktor --> desktop([Desktop])
+ksoup --> desktop
 
-ssr -->|no| driver{WebDriver<br>allowed?} -->|yes| selenium(((Selenium))) --> server
+ssr -->|no| driver{WebDriver<br>allowed?}
+-->|yes| selenium(((3. Selenium)))
+--> server
+
 selenium --> desktop
 
-driver -->|no| extension(((Extension<br>+ Robot))) --> desktop
+driver -->|no| extension(((4. Extension<br>+ Robot)))
+--> desktop
 
-web -->|no| robot(((Robot))) --> desktop
+web -->|no| robot(((5. Robot))) --> desktop
 ```

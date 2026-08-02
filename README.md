@@ -49,13 +49,18 @@ ksoup --> server
 
 ksoup --> desktop
 
-ssr -->|no| driver{WebDriver<br>allowed?}
--->|yes| selenium(((3. Selenium)))
+ssr -->|no| bot{Detects bot?}
+-->|no| view(((3. WebView)))
+--> mobile
+
+bot -->|no| playwright(((3. Playwright)))
 --> server
 
-selenium --> desktop
 
-driver -->|no| extension(((4. Extension<br>+ Robot)))
+
+playwright --> desktop
+
+bot -->|yes| extension(((4. Extension<br>+ Robot)))
 --> desktop
 
 web -->|no| robot(((5. Robot))) --> desktop

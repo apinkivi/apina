@@ -1,3 +1,4 @@
 - Write compact documentation.
+- Write all repository files, code, commits, and documentation in English.
 - Evaluate technologies openly without locking into specific ones. Keep discovery and specifications technology-neutral.
 - Safe discovery and testing: Never delete or modify user data that was not created by the test session itself. Only inspect existing data read-only, and only mutate/delete items created explicitly during the test session.

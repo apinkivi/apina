@@ -1,0 +1,111 @@
+{
+  "$schema": "../../schema/apina-spec.schema.json",
+  "version": "0.1.0",
+  "app": {
+    "id": "google-tasks",
+    "name": "Google Tasks",
+    "url": "https://calendar.google.com/calendar/u/0/r/tasks",
+    "embed_url": "https://tasks.google.com/embed/fullscreen/",
+    "platform": "web"
+  },
+  "auth": {
+    "method": "session_cookie",
+    "required_headers": [
+      "Cookie",
+      "x-goog-authuser"
+    ],
+    "notes": "Requires an active Google session with access to Google Tasks."
+  },
+  "capabilities": [
+    {
+      "id": "create_recurring_task",
+      "description": "Create a recurring task (feature missing in public Google Tasks REST API v1).",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "Task title"
+          },
+          "recurrence": {
+            "type": "object",
+            "properties": {
+              "frequency": {
+                "type": "string",
+                "enum": ["daily", "weekly", "monthly", "yearly"],
+                "description": "Recurrence interval unit"
+              },
+              "start_date": {
+                "type": "string",
+                "format": "date",
+                "description": "Initial start date (YYYY-MM-DD)"
+              },
+              "timezone": {
+                "type": "string",
+                "default": "Europe/Helsinki"
+              }
+            },
+            "required": ["frequency"]
+          },
+          "list_id": {
+            "type": "string",
+            "default": "~default",
+            "description": "Target task list ID"
+          }
+        },
+        "required": ["title", "recurrence"]
+      },
+      "discovery_findings": {
+        "rest": {
+          "supported": true,
+          "endpoint": "https://tasks.google.com/_/TasksWebEmbedUi/data/batchexecute?rpcids=SOV0tb",
+          "method": "POST",
+          "content_type": "application/x-www-form-urlencoded;charset=UTF-8",
+          "assessment": {
+            "viable": true,
+            "fragility": "high",
+            "notes": "Google uses internal batchexecute positional arrays (RPC ID SOV0tb) and Sync RPC. Highly fragile across web server releases."
+          }
+        },
+        "ui_automation": {
+          "supported": true,
+          "interaction_model": "spa_dom",
+          "steps": [
+            {
+              "action": "click",
+              "target": "role=button[name*='Lisää tehtävä' i], role=button[name*='Add a task' i]"
+            },
+            {
+              "action": "fill",
+              "target": "role=textbox[name*='Otsikko' i], role=textbox[name*='Title' i]",
+              "value": "{{parameters.title}}"
+            },
+            {
+              "action": "click",
+              "target": "role=button[name*='Toista' i], role=button[name*='Repeat' i]"
+            },
+            {
+              "action": "custom",
+              "target": "recurrence_dialog",
+              "value": "{{parameters.recurrence.frequency}}"
+            },
+            {
+              "action": "click",
+              "target": "role=button[name*='Valmis' i], role=button[name*='Done' i], role=button[name*='Tallenna' i]"
+            }
+          ],
+          "assessment": {
+            "viable": true,
+            "fragility": "low",
+            "notes": "Accessibility roles and labels remain stable across UI updates and language variations."
+          }
+        }
+      },
+      "strategy_recommendation": {
+        "primary": "ui_automation",
+        "fallback": "rest",
+        "rationale": "UI automation via accessibility roles is significantly more durable against Google internal obfuscation changes than raw batchexecute RPC payloads."
+      }
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+# Browser automation profiles and session data
+.chrome-session/
+.chrome-test-profile/
+*.session
+
+# Network recordings (may contain sensitive session cookies/tokens)
+*.har
+
+# Dependencies and build artifacts
+node_modules/
+dist/
+build/
+.gradle/
+
+# Environment and secrets
+.env
+*.local

@@ -1,0 +1,152 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://apina.dev/schemas/v1/spec.schema.json",
+  "title": "APInaApplicationSpecification",
+  "description": "Technology-neutral intermediate specification describing discovered capabilities and execution strategies.",
+  "type": "object",
+  "required": ["version", "app", "capabilities"],
+  "properties": {
+    "version": {
+      "type": "string",
+      "description": "Specification format version"
+    },
+    "app": {
+      "type": "object",
+      "required": ["id", "name", "url", "platform"],
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "url": { "type": "string", "format": "uri" },
+        "embed_url": { "type": "string", "format": "uri" },
+        "platform": {
+          "type": "string",
+          "enum": ["web", "desktop", "mobile"]
+        }
+      }
+    },
+    "auth": {
+      "type": "object",
+      "properties": {
+        "method": {
+          "type": "string",
+          "enum": ["none", "session_cookie", "api_key", "bearer_token", "oauth2", "custom"]
+        },
+        "required_headers": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "notes": { "type": "string" }
+      }
+    },
+    "capabilities": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "description", "parameters", "discovery_findings", "strategy_recommendation"],
+        "properties": {
+          "id": { "type": "string" },
+          "description": { "type": "string" },
+          "parameters": {
+            "type": "object",
+            "description": "JSON Schema defining input parameters"
+          },
+          "returns": {
+            "type": "object",
+            "description": "JSON Schema defining return output"
+          },
+          "discovery_findings": {
+            "type": "object",
+            "description": "Discovered execution paths",
+            "properties": {
+              "rest": {
+                "type": "object",
+                "description": "Direct HTTP / REST / RPC protocol execution path",
+                "required": ["supported"],
+                "properties": {
+                  "supported": { "type": "boolean" },
+                  "endpoint": { "type": "string" },
+                  "method": {
+                    "type": "string",
+                    "enum": ["GET", "POST", "PUT", "PATCH", "DELETE"]
+                  },
+                  "content_type": { "type": "string" },
+                  "headers": {
+                    "type": "object",
+                    "additionalProperties": { "type": "string" }
+                  },
+                  "request_body_template": { "type": "string" },
+                  "assessment": {
+                    "type": "object",
+                    "required": ["viable", "fragility"],
+                    "properties": {
+                      "viable": { "type": "boolean" },
+                      "fragility": {
+                        "type": "string",
+                        "enum": ["low", "medium", "high"]
+                      },
+                      "notes": { "type": "string" }
+                    }
+                  }
+                }
+              },
+              "ui_automation": {
+                "type": "object",
+                "description": "Browser / DOM / UI automation execution path",
+                "required": ["supported"],
+                "properties": {
+                  "supported": { "type": "boolean" },
+                  "interaction_model": {
+                    "type": "string",
+                    "enum": ["spa_dom", "static_dom", "canvas", "native"]
+                  },
+                  "steps": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "required": ["action"],
+                      "properties": {
+                        "action": {
+                          "type": "string",
+                          "enum": ["click", "fill", "press", "select", "wait", "custom"]
+                        },
+                        "target": { "type": "string" },
+                        "value": { "type": "string" }
+                      }
+                    }
+                  },
+                  "assessment": {
+                    "type": "object",
+                    "required": ["viable", "fragility"],
+                    "properties": {
+                      "viable": { "type": "boolean" },
+                      "fragility": {
+                        "type": "string",
+                        "enum": ["low", "medium", "high"]
+                      },
+                      "notes": { "type": "string" }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "strategy_recommendation": {
+            "type": "object",
+            "required": ["primary", "rationale"],
+            "properties": {
+              "primary": {
+                "type": "string",
+                "enum": ["rest", "ui_automation", "hybrid"]
+              },
+              "fallback": {
+                "type": "string",
+                "enum": ["rest", "ui_automation", "none"]
+              },
+              "rationale": { "type": "string" }
+            }
+          }
+        }
+      }
+    }
+  }
+}

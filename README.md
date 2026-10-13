@@ -8,9 +8,14 @@ The API/MCP server is missing or there are many other reasons to build it:
 
 - [Facebook Marketplace](/test/facebook-marketplace/desktop-browser.md)
 - [Google Gemini](/test/google-gemini/desktop-browser.md) AI subscription doesn't include API use.
-- [Google Tasks](/test/google-tasks/desktop-browser.md) [API v1](https://developers.google.com/workspace/tasks/reference/rest) is missing (eg. recurring) functionalities.
+- [Google Tasks](/test/google-tasks/desktop-browser.md) ([spec](/test/google-tasks/spec.json)) [API v1](https://developers.google.com/workspace/tasks/reference/rest) is missing (eg. recurring) functionalities.
 - [tori](/test/tori/desktop-browser.md) API isn't free.
 - [Veikkaus Pokeri](/test/veikkaus-pokeri/desktop-browser.md)
+
+## Architecture & Workflows
+
+- [Application Specification Schema](/schema/apina-spec.schema.json)
+- [Discovery Workflows](/docs/discovery-workflows.md)
 
 ## Layers
 

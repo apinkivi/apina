@@ -1,6 +1,16 @@
 # 🐒 APIna
 
-Build API for any UI
+Framework to build API or MCP server for any UI built for humans only. Rebuilding should be easy because UI may change and break it.
+
+## Test Cases
+
+The API/MCP server is missing or there are many other reasons to build it:
+
+- [Facebook Marketplace](/test/facebook-marketplace/desktop-browser.md)
+- [Google Gemini](/test/google-gemini/desktop-browser.md) AI subscription doesn't include API use.
+- [Google Tasks](/test/google-tasks/desktop-browser.md) [API v1](https://developers.google.com/workspace/tasks/reference/rest) is missing (eg. recurring) functionalities.
+- [tori](/test/tori/desktop-browser.md) API isn't free.
+- [Veikkaus Pokeri](/test/veikkaus-pokeri/desktop-browser.md)
 
 ## Layers
 
@@ -13,12 +23,6 @@ Build API for any UI
 5. *Automation* layer is the actual implementation.
    - Component framework (eg. Material Design) and theme.
 
-
-## Commands
-
-- `gradlew dependencyUpdates --no-configuration-cache --no-parallel -Dorg.gradle.warning.mode=none` - Report updates
-- `gradlew wrapper --gradle-version 9.7.0-rc-3 --distribution-type all` - Update Gradle wrapper
-- `gradlew spotlessApply --no-configuration-cache` - Format Kotlin source
 
 ## Examine process
 

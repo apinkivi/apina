@@ -28,7 +28,7 @@ sequenceDiagram
 ---
 
 ## Workflow 2: Human-Recorded Network Capture (Sensitive / High-Risk Apps)
-Used for sensitive applications (e.g., gambling/Veikkaus Pokeri, banking, payment flows) where the human must retain full control over actions.
+Used for sensitive applications (e.g., banking, payment flows, financial transactions) where the human must retain full control over actions.
 
 ```mermaid
 sequenceDiagram
@@ -46,7 +46,7 @@ sequenceDiagram
 ```
 
 1. **Safe recording**: User operates their own personal browser and initiates DevTools Network recording (*Preserve log* enabled).
-2. **Action execution**: User executes the target flow personally (e.g. playing poker hands, testing listings).
+2. **Action execution**: User executes the target flow personally (e.g. executing authenticated transactions, testing listings).
 3. **HAR export**: User exports network traffic via *Save all as HAR with content* to `test/<app-id>/<name>.har`.
 4. **Offline analysis**: Agent inspects endpoints, RPC calls, headers, and schemas without touching live user funds or credentials.
 5. **Specification output**: Agent generates `spec.json` documenting the REST/RPC protocols and payload structures.

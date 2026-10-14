@@ -1,1 +1,0 @@
-# [Veikkaus Pokeri](https://www.veikkaus.fi/fi/pokeri)
